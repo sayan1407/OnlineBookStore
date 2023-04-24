@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-namespace BulkyBookWeb.Models
+namespace BulkyBook.Models
 {
     public class Category
     {

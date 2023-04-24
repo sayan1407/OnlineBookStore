@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BulkyBookWeb.Data;
+using BulkyBook.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 namespace BulkyBookWeb

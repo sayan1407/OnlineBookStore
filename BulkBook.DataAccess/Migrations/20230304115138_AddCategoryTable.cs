@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BulkyBookWeb.Migrations
+namespace BulkyBook.DataAccess
 {
     public partial class AddCategoryTable : Migration
     {

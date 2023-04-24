@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore;
 
-namespace BulkyBookWeb.Migrations
+namespace BulkyBook.DataAccess
 {
     public partial class PopulateCategoriesTable : Migration
     {
