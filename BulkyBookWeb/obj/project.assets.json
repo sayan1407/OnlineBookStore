@@ -2574,6 +2574,31 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "BulkBook.DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "BulkyBook.Models": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "3.1.32",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.32"
+        },
+        "compile": {
+          "bin/placeholder/BulkBook.DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BulkBook.DataAccess.dll": {}
+        }
+      },
+      "BulkyBook.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/BulkyBook.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BulkyBook.Models.dll": {}
+        }
       }
     }
   },
@@ -8465,10 +8490,22 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "BulkBook.DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../BulkBook.DataAccess/BulkBook.DataAccess.csproj",
+      "msbuildProject": "../BulkBook.DataAccess/BulkBook.DataAccess.csproj"
+    },
+    "BulkyBook.Models/1.0.0": {
+      "type": "project",
+      "path": "../BulkyBook.Models/BulkyBook.Models.csproj",
+      "msbuildProject": "../BulkyBook.Models/BulkyBook.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "BulkBook.DataAccess >= 1.0.0",
+      "BulkyBook.Models >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 3.1.32",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.32",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.32",
@@ -8500,7 +8537,14 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Sayan\\source\\repos\\BulkyBook\\BulkBook.DataAccess\\BulkBook.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Sayan\\source\\repos\\BulkyBook\\BulkBook.DataAccess\\BulkBook.DataAccess.csproj"
+            },
+            "C:\\Users\\Sayan\\source\\repos\\BulkyBook\\BulkyBook.Models\\BulkyBook.Models.csproj": {
+              "projectPath": "C:\\Users\\Sayan\\source\\repos\\BulkyBook\\BulkyBook.Models\\BulkyBook.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
