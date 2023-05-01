@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BulkyBook.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using BulkBook.DataAccess.Repository.IRepository;
+using BulkBook.DataAccess.Repository;
 
 namespace BulkyBookWeb
 {
@@ -29,6 +31,7 @@ namespace BulkyBookWeb
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")
                 ));
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
            // services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
