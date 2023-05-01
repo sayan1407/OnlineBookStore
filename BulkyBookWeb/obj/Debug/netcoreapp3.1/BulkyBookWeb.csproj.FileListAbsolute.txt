@@ -147,3 +147,10 @@ C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\bin\Debug\netcoreapp3.1\zh-Ha
 C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\obj\Debug\netcoreapp3.1\BulkyBookWeb.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\obj\Debug\netcoreapp3.1\Razor\Views\Category\Index.cshtml.g.cs
 C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\obj\Debug\netcoreapp3.1\Razor\Views\Category\Create.cshtml.g.cs
+C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\obj\Debug\netcoreapp3.1\Razor\Views\Category\Edit.cshtml.g.cs
+C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\obj\Debug\netcoreapp3.1\Razor\Views\Category\Delete.cshtml.g.cs
+C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Notification.cshtml.g.cs
+C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\bin\Debug\netcoreapp3.1\BulkBook.DataAccess.dll
+C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\bin\Debug\netcoreapp3.1\BulkyBook.Models.dll
+C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\bin\Debug\netcoreapp3.1\BulkBook.DataAccess.pdb
+C:\Users\Sayan\source\repos\BulkyBook\BulkyBookWeb\bin\Debug\netcoreapp3.1\BulkyBook.Models.pdb
