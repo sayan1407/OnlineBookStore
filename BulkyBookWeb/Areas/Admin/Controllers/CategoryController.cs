@@ -9,6 +9,7 @@ using BulkBook.DataAccess.Repository.IRepository;
 
 namespace BulkyBookWeb.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _db;
