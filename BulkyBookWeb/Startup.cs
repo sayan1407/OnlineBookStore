@@ -10,8 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BulkyBook.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using BulkBook.DataAccess.Repository.IRepository;
-using BulkBook.DataAccess.Repository;
+using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.DataAccess.Repository;
 
 namespace BulkyBookWeb
 {
@@ -32,7 +32,7 @@ namespace BulkyBookWeb
                 Configuration.GetConnectionString("DefaultConnection")
                 ));
             services.AddScoped<IUnitOfWork,UnitOfWork >();
-           // services.AddRazorPages().AddRazorRuntimeCompilation();
+         //services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
         }

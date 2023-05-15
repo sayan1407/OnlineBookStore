@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BulkyBook.DataAccess;
 using BulkyBook.Models;
-using BulkBook.DataAccess.Repository.IRepository;
+using BulkyBook.DataAccess.Repository.IRepository;
 
 namespace BulkyBookWeb.Controllers
 {
