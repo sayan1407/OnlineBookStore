@@ -18,19 +18,34 @@ namespace BulkyBook.DataAccess.Repository
             _db = db;
             this.dbSet = _db.Set<T>();
         }
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? IncludeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            string[] Properties = IncludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (IncludeProperties != null)
+            {
+                foreach(string prop in Properties)
+                {
+                   query =  query.Include(prop);
+                }
+            }
             return query.ToList();
         }
         public void Add(T entity)
         {
             dbSet.Add(entity);
         }
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? IncludeProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
+            if (IncludeProperties != null)
+            {
+                foreach (string prop in IncludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query.Include(prop);
+                }
+            }
             return query.FirstOrDefault();
         }
         public void Remove(T entity)
