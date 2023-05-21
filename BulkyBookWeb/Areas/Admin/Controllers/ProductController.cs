@@ -8,16 +8,23 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.DataAccess;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BulkyBook.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class ProductController : Controller
     {
-        private IUnitOfWork _unitOfWork;
-        public ProductController(IUnitOfWork unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _hostEnvironment;
+
+        public ProductController(IUnitOfWork unitOfWork,IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _hostEnvironment = webHostEnvironment;
 
         }
         public IActionResult Index()
@@ -49,6 +56,29 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 productVM.Product = product;
             }
             return View(productVM);
+        }
+        [HttpPost]
+        public IActionResult Upsert(ProductVM obj,IFormFile file)
+        {
+            if(ModelState.IsValid)
+            {
+                var rootPath = _hostEnvironment.WebRootPath;
+                var fileName = Guid.NewGuid().ToString();
+                var uploadPath = Path.Combine(rootPath, @"images\products");
+                var fileExtension = Path.GetExtension(file.FileName);
+                using(var fileStream = new FileStream(Path.Combine(uploadPath,fileName+fileExtension),FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                obj.Product.ImageUrl = @"\images\products" + fileName + fileExtension;
+                _unitOfWork.Product.Add(obj.Product);
+                _unitOfWork.Save();
+                TempData["success"] = "Product added successfully";
+                return RedirectToAction("Index");
+
+            }
+            return View();
+
         }
     }
 }
