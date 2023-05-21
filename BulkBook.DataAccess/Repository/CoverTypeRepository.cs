@@ -1,11 +1,11 @@
-﻿using BulkBook.DataAccess.Repository.IRepository;
+﻿using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.DataAccess;
 using BulkyBook.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BulkBook.DataAccess.Repository
+namespace BulkyBook.DataAccess.Repository
 {
     public class CoverTypeRepository : Repository<CoverType>,ICoverTypeRepository
     {

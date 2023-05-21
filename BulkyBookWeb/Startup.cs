@@ -32,7 +32,7 @@ namespace BulkyBookWeb
                 Configuration.GetConnectionString("DefaultConnection")
                 ));
             services.AddScoped<IUnitOfWork,UnitOfWork >();
-         //services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 
         }
