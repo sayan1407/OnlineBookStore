@@ -7,6 +7,7 @@ using BulkyBook.Models.ViewModel;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.DataAccess;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BulkyBook.Models;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
@@ -27,11 +28,26 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         public IActionResult Upsert(int? id)
         {
             ProductVM productVM = new ProductVM();
+            
             productVM.CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem()
             {
                 Text = i.Name,
                 Value = i.Id.ToString()
             });
+            productVM.CoverTypeList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem()
+            {
+                Text = i.Name,
+                Value = i.ID.ToString()
+            });
+            if(id == null || id == 0)
+            {
+                productVM.Product = new Product();
+            }
+            else
+            {
+                Product product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
+                productVM.Product = product;
+            }
             return View(productVM);
         }
     }
