@@ -39,6 +39,7 @@ namespace BulkyBook.DataAccess.Repository
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? IncludeProperties = null)
         {
             IQueryable<T> query = dbSet;
+     
             query = query.Where(filter);
             if (IncludeProperties != null)
             {
