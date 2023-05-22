@@ -21,10 +21,11 @@ namespace BulkyBook.DataAccess.Repository
         public IEnumerable<T> GetAll(string? IncludeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            string[] Properties = IncludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            
             if (IncludeProperties != null)
             {
-                foreach(string prop in Properties)
+                string[] Properties = IncludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string prop in Properties)
                 {
                    query =  query.Include(prop);
                 }
