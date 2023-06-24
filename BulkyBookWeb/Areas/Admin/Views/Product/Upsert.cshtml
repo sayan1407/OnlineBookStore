@@ -101,7 +101,7 @@
     function ValidateInputs() {
         if (document.getElementById("uploadImage").value == "") {
             swal("Alert!", "Please upload a image!", "warning");
-
+            return false;
         }
     }
 </script>

@@ -58,6 +58,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             return View(productVM);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Upsert(ProductVM obj,IFormFile file)
         {
             
@@ -106,6 +107,24 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             var productList = _unitOfWork.Product.GetAll(IncludeProperties: "Category,CoverType");
             return Json(new { data = productList });
+        }
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var obj = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
+            if (obj == null)
+                return Json(new { success = false, message = "Cannot delete the product" });
+            var rootPath = _hostEnvironment.WebRootPath;
+            if (obj.ImageUrl != null)
+            {
+                string oldImagePath = Path.Combine(rootPath, obj.ImageUrl.TrimStart('/'));
+                if (System.IO.File.Exists(oldImagePath))
+                    System.IO.File.Delete(oldImagePath);
+            }
+            _unitOfWork.Product.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "The product is deleted successfully" });
+
         }
 
     }
