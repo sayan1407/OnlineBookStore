@@ -12,6 +12,7 @@ using BulkyBook.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.DataAccess.Repository;
+using Microsoft.AspNetCore.Identity;
 
 namespace BulkyBookWeb
 {
@@ -33,6 +34,7 @@ namespace BulkyBookWeb
                 ));
             services.AddScoped<IUnitOfWork,UnitOfWork >();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 
         }
@@ -54,9 +56,14 @@ namespace BulkyBookWeb
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
-
+            
+           app.UseEndpoints(endpoints =>
+           {
+               endpoints.MapRazorPages();
+           });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
