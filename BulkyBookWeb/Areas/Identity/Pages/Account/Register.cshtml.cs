@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using BulyBook.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -27,19 +28,22 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
         }
 
         [BindProperty]
@@ -74,6 +78,8 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
             public string PostalCode { get; set; }
             public string Role { get; set; }
             public IEnumerable<SelectListItem> lstRoles { get; set; }
+            public int? CompanyId { get; set; }
+            public IEnumerable<SelectListItem> lstCompanies { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -94,7 +100,13 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
                 {
                     Text = r.Name,
                     Value = r.Name
+                }),
+                lstCompanies = _unitOfWork.Company.GetAll().Select(u => new SelectListItem()
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
                 })
+
             };
         }
 
@@ -113,6 +125,10 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
                     City = Input.City,
                     PostalCode = Input.PostalCode
                 };
+                if(Input.Role == Role.Company)
+                {
+                    user.CompanyId = Input.CompanyId;
+                }
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
