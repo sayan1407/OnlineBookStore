@@ -125,6 +125,7 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
                     City = Input.City,
                     PostalCode = Input.PostalCode
                 };
+                
                 if(Input.Role == Role.Company)
                 {
                     user.CompanyId = Input.CompanyId;
