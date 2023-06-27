@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
@@ -71,6 +72,8 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
             public string City { get; set; }
             public string State { get; set; }
             public string PostalCode { get; set; }
+            public string Role { get; set; }
+            public IEnumerable<SelectListItem> lstRoles { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -85,6 +88,14 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
 
             }
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            Input = new InputModel()
+            {
+                lstRoles = _roleManager.Roles.Select(r => new SelectListItem()
+                {
+                    Text = r.Name,
+                    Value = r.Name
+                })
+            };
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
