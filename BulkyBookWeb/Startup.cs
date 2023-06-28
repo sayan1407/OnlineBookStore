@@ -40,6 +40,13 @@ namespace BulkyBookWeb
             // services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddSingleton<IEmailSender, EmailService>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+
+            });
 
         }
 
