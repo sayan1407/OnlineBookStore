@@ -59,5 +59,20 @@ namespace BulkyBook.DataAccess.Repository
             dbSet.RemoveRange(entity);
         }
 
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter, string IncludeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+            query = query.Where(filter);
+
+            if (IncludeProperties != null)
+            {
+                string[] Properties = IncludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string prop in Properties)
+                {
+                    query = query.Include(prop);
+                }
+            }
+            return query.ToList();
+        }
     }
 }

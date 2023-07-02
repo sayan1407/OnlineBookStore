@@ -17,5 +17,6 @@ namespace BulkyBook.Models
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         public ApplicationUser ApplicationUser { get; set; }
+
     }
 }
