@@ -64,6 +64,10 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        public IActionResult Summary()
+        {
+            return View();
+        }
         public double GetPriceByCount(double Price,double Price50,double Price100,int Count)
         {
             if (Count <= 50)
@@ -72,6 +76,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                 return Price50;
             return Price100;
         }
+
 
     }
 }
