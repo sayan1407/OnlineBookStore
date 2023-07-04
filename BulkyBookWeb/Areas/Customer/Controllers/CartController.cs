@@ -8,6 +8,7 @@ using BulkyBook.Models;
 using BulkyBook.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Stripe.Checkout;
 
 namespace BulkyBookWeb.Areas.Customer.Controllers
 {
@@ -122,9 +123,38 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();
             }
-            _unitOfWork.ShoppingCart.RemoveRange(Cart.ListCart);
-            _unitOfWork.Save();
-            return RedirectToAction(nameof(Index));
+            var domain = "";
+            var options = new SessionCreateOptions
+            {
+                LineItems = new List<SessionLineItemOptions>(),
+                Mode = "payment",
+                SuccessUrl = domain+$"customer/cart/OrderConfirmation/?id={Cart.OrderHeader.Id}",
+                CancelUrl = domain+$"customer/cart/index",
+            };
+            foreach(var cart in Cart.ListCart)
+            {
+                var sessionListItem = new SessionLineItemOptions()
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        UnitAmount = (long)(cart.FinalPrice*100),
+                        Currency = "usd",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = cart.Product.Title,
+                        },
+                    },
+                    Quantity = cart.Count,
+                };
+                options.LineItems.Add(sessionListItem);
+                
+            }
+
+            var service = new SessionService();
+            Session session = service.Create(options);
+
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
 
         }
         public double GetPriceByCount(double Price,double Price50,double Price100,int Count)
