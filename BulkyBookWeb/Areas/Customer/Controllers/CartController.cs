@@ -123,7 +123,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();
             }
-            var domain = "";
+            var domain = "https://localhost:44348/";
             var options = new SessionCreateOptions
             {
                 LineItems = new List<SessionLineItemOptions>(),
@@ -138,7 +138,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                     PriceData = new SessionLineItemPriceDataOptions
                     {
                         UnitAmount = (long)(cart.FinalPrice*100),
-                        Currency = "usd",
+                        Currency = "inr",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = cart.Product.Title,
@@ -152,10 +152,28 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 
             var service = new SessionService();
             Session session = service.Create(options);
-
+            _unitOfWork.OrderHeader.UpdatePaymentId(Cart.OrderHeader, session.PaymentIntentId, session.Id);
+            _unitOfWork.Save();
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
 
+        }
+        public IActionResult OrderConfirmation(int id)
+        {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id);
+            var service = new SessionService();
+            Session session = service.Get(orderHeader.SessionId);
+            if(session.PaymentStatus == "paid")
+            {
+                _unitOfWork.OrderHeader.UpdateStatus(orderHeader, "Approved", "Approved");
+                _unitOfWork.Save();
+            }
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            List<ShoppingCart> lstShoppingCart = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value, IncludeProperties: "Product").ToList();
+            _unitOfWork.ShoppingCart.RemoveRange(lstShoppingCart);
+            _unitOfWork.Save();
+            return View(id);
         }
         public double GetPriceByCount(double Price,double Price50,double Price100,int Count)
         {
