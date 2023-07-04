@@ -39,7 +39,6 @@ namespace BulkyBook.Models
         [ForeignKey("CoverTypeId")]
        
         public CoverType CoverType { get; set; }
-        [NotMapped]
-        public double FinalPrice { get; set; }
+       
     }
 }
