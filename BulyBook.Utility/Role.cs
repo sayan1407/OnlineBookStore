@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BulyBook.Utility
+namespace BulkyBook.Utility
 {
     public class Role
     {

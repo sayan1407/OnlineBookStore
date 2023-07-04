@@ -14,7 +14,8 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.DataAccess.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using BulyBook.Utility;
+using BulkyBook.Utility;
+using Stripe;
 
 namespace BulkyBookWeb
 {
@@ -47,6 +48,7 @@ namespace BulkyBookWeb
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 
             });
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
         }
 
@@ -70,6 +72,7 @@ namespace BulkyBookWeb
             app.UseAuthentication();
 
             app.UseAuthorization();
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe:SecretKey").Get<string>();
             
            app.UseEndpoints(endpoints =>
            {

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBook.DataAccess", "Bul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBook.Models", "BulkyBook.Models\BulkyBook.Models.csproj", "{B6BBE740-AA3A-4487-B41D-FCC24B7802D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulyBook.Utility", "BulyBook.Utility\BulyBook.Utility.csproj", "{8A9196FD-CEB4-4366-B096-CF923E174DEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBook.Utility", "BulyBook.Utility\BulkyBook.Utility.csproj", "{8A9196FD-CEB4-4366-B096-CF923E174DEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

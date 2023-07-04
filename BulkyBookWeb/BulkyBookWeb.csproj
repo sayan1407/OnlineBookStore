@@ -14,12 +14,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Stripe.net" Version="41.22.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BulkBook.DataAccess\BulkyBook.DataAccess.csproj" />
     <ProjectReference Include="..\BulkyBook.Models\BulkyBook.Models.csproj" />
-    <ProjectReference Include="..\BulyBook.Utility\BulyBook.Utility.csproj" />
+    <ProjectReference Include="..\BulyBook.Utility\BulkyBook.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
