@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CompanyController : Controller
     {
         private IUnitOfWork _unitOfWork;

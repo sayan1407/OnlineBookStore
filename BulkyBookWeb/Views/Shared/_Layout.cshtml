@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using BulkyBook.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,23 +34,40 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Cover" asp-action="Index">Cover</a>
         </li>*@
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Managment</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Cover" asp-action="Index">Cover Type</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+                        @if (User.IsInRole(Role.Admin))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Managment</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Cover" asp-action="Index">Cover Type</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
 
-                                <div class="dropdown-divider"></div>
+                                    <div class="dropdown-divider"></div>
 
-                            </div>
-                        </li>
+                                </div>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Company" asp-action="Index">Company</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart4"></i></a>
-                        </li>
+                        @if (@HttpContextAccessor.HttpContext.Session.GetInt32("SessionCart") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                                    <i class="bi bi-cart4"></i> &nbsp; (@HttpContextAccessor.HttpContext.Session.GetInt32("SessionCart"))
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                                    <i class="bi bi-cart4"></i> &nbsp; (0)
+                                </a>
+                            </li>
+
+                        }
                     </ul>
 
                 </div>

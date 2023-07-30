@@ -7,6 +7,7 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using BulkyBook.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 
@@ -50,13 +51,19 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             if(shoppingCart.Count <= 1)
             {
                 _unitOfWork.ShoppingCart.Remove(shoppingCart);
+                _unitOfWork.Save();
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                var count = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).ToList().Count;
+                HttpContext.Session.SetInt32("SessionCart", count);
             }
             else
             {
                 _unitOfWork.ShoppingCart.DecreaseProductCount(shoppingCart, 1);
+                _unitOfWork.Save();
 
             }
-            _unitOfWork.Save();
+            
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Remove(int id)
@@ -64,6 +71,10 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             var shoppingCart = _unitOfWork.ShoppingCart.GetFirstOrDefault(u => u.Id == id, IncludeProperties: "Product");
             _unitOfWork.ShoppingCart.Remove(shoppingCart);
             _unitOfWork.Save();
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var count = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).ToList().Count;
+            HttpContext.Session.SetInt32("SessionCart", count);
             return RedirectToAction(nameof(Index));
 
         }

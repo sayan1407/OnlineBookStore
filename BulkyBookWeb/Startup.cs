@@ -49,6 +49,14 @@ namespace BulkyBookWeb
 
             });
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            }
+            ) ;
 
         }
 
@@ -72,6 +80,7 @@ namespace BulkyBookWeb
             app.UseAuthentication();
 
             app.UseAuthorization();
+            app.UseSession();
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe:SecretKey").Get<string>();
             
            app.UseEndpoints(endpoints =>
@@ -84,6 +93,7 @@ namespace BulkyBookWeb
                     name: "default",
                     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }
